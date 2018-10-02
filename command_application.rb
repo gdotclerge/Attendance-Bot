@@ -4,7 +4,7 @@ require 'slack-ruby-bot'
 require 'pry'
 
 
-class McColemanTesterBot < SlackRubyBot::Bot
+class ImHereBot < SlackRubyBot::Bot
 
 
   command 'ping' do |client, data, match|
@@ -17,6 +17,10 @@ class McColemanTesterBot < SlackRubyBot::Bot
     put_cells(client.store.users[data.user]['real_name'])
   end
 
+  operator 'new class' do |client, data, match|
+    binding.pry
+  end
+
 end
 
-McColemanTesterBot.run
+ImHereBot.run
