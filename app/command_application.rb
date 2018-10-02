@@ -3,7 +3,6 @@
 # require_relative 'command_application.rb'
 # require 'pry'
 
-
 class ImHereBot < SlackRubyBot::Bot
 
 
@@ -17,10 +16,11 @@ class ImHereBot < SlackRubyBot::Bot
 
     slack_members = ImHereBot.get_slack_members(client, data)
     # Need to make helper class so we can call Helper.get_slack_members...
-
     slack_members.each do |slack_id|
       user = User.find_by(slack_id: slack_id)
-      user.mod = mod
+      # user.mod = mod
+      # user.save
+      user.update_attributes(mod: mod)
     end
 
     client.say(text: "Updated #{slack_members.count} users to #{mod}.", channel: data.channel)
