@@ -5,7 +5,8 @@ require 'pry'
 
 
 class ImHereBot < SlackRubyBot::Bot
-  @@session = GoogleSheet.from_service_account_key("config.json")
+
+  @@session = GoogleSheet.from_service_account_key("config/config.json")
 
 
 
@@ -57,5 +58,3 @@ class ImHereBot < SlackRubyBot::Bot
   end
 
 end
-
-ImHereBot.run

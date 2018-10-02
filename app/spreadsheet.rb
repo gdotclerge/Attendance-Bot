@@ -12,7 +12,7 @@ class GoogleSheet < GoogleDrive::Session
 
   def authorizate_worksheet()
     # binding.pry
-    session = GoogleDrive::Session.from_service_account_key("config.json")
+    # session = GoogleDrive::Session.from_service_account_key("../config/config.json")
     # session = GoogleDrive::Session.from_service_account_key("client_secret.json")
     binding.pry
     spreadsheet = session.spreadsheet_by_title("test")
@@ -20,7 +20,7 @@ class GoogleSheet < GoogleDrive::Session
   end
 
   def return_session
-    session = GoogleSheet.from_service_account_key("config.json")
+    # session = GoogleSheet.from_service_account_key("config.json")
     binding.pry
   end
 

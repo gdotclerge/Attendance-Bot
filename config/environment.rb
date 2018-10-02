@@ -1,8 +1,21 @@
-require ‘bundler’
+require 'bundler'
 
 Bundler.require
 
-ActiveRecord::Base.establish_connection(adapter: ‘sqlite3’, database: ‘db/development.db’)
+
+# # conn = PG::Connection.new
+# # binding.pry
+#
+# ActiveRecord::Base.establish_connection(
+#  adapter:  "postgresql",
+#  host:     "localhost",
+#  username: "garry.clerge",
+#  password: "",
+#  database: "postgres"
+# )
+#
+# # ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
+# # ActiveRecord::Base.establish_connection(adapter: 'postgresql', database: 'db/development.db')
 ActiveRecord::Base.logger = false
-require_all ‘lib’
-require_all ‘app’
+require_all 'lib'
+require_all 'app'
