@@ -4,25 +4,32 @@ Bundler.require
 
 class GoogleSheet < GoogleDrive::Session
 
-  def initialize
+  @@session = GoogleSheet.from_service_account_key("config/config.json")
 
+  def self.post_to_sheet(user, real_name)
+    self.worksheet(user)
+
+    x = find_todays_date_by_locating_the_row
+    y = find_the_person_submitting_the_request_for_column(entered_name)
+
+    worksheet(user)[y,x] = Time.now.strftime("%H:%M")
+    worksheet.save
   end
 
 
+  # def authorizate_worksheet()
+  #   # binding.pry
+  #   # session = GoogleDrive::Session.from_service_account_key("../config/config.json")
+  #   # session = GoogleDrive::Session.from_service_account_key("client_secret.json")
+  #   binding.pry
 
-  def authorizate_worksheet()
-    # binding.pry
-    # session = GoogleDrive::Session.from_service_account_key("../config/config.json")
-    # session = GoogleDrive::Session.from_service_account_key("client_secret.json")
-    binding.pry
-    spreadsheet = session.spreadsheet_by_title("test")
-    return spreadsheet.worksheets.first
-  end
+  #   return spreadsheet.worksheets.first
+  # end
 
-  def return_session
-    # session = GoogleSheet.from_service_account_key("config.json")
-    binding.pry
-  end
+  # def return_session
+  #   # session = GoogleSheet.from_service_account_key("config.json")
+  #   binding.pry
+  # end
 
 
   def read_cells()
@@ -44,6 +51,7 @@ class GoogleSheet < GoogleDrive::Session
   end
 
   def find_the_person_submitting_the_request_for_column(entered_name)
+    
     worksheet = authorizate_worksheet
     counter = 12
     while counter < 50 do
@@ -54,17 +62,12 @@ class GoogleSheet < GoogleDrive::Session
     end
   end
 
-  def put_cells(entered_name)
-    worksheet = authorizate_worksheet
-    x = find_todays_date_by_locating_the_row
-    y = find_the_person_submitting_the_request_for_column(entered_name)
-
-    worksheet[y,x] = Time.now.strftime("%H:%M")
-    worksheet.save
-  end
 
 
-  def save_spreadsheet
+  def self.worksheet(user)
+    spreadsheet = @@session.spreadsheet_by_key(user.sheet_key)
+    spreadsheet.worksheets.find { |worksheet| worksheet.title.include?("Mod1") }
+    # spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(user.mod) }
 
   end
 
