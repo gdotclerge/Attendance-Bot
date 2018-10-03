@@ -42,11 +42,6 @@ class ImHereBot < SlackRubyBot::Bot
 
   # ========== STUDENT COMMANDS ===============
 
-
-  # command 'ping' do |client, data, match|
-  #   client.say(text: "awesome", channel: data.channel)
-  # end
-
   command 'present' do |client, data, match|
     slack_id = data.user
     real_name = ImHereBot.real_name(client, data)
@@ -83,7 +78,7 @@ class ImHereBot < SlackRubyBot::Bot
 
   def self.permitted?(client, data, match)
     admin_status = client.store.users[data.user].is_admin
-    ImHereBot.admin_command?(match) ? admin_status : true
+    ImHereBot.admin_command?(match) ? admin_status : !admin_status
   end
 
   def self.user(client, data)

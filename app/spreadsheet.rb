@@ -18,7 +18,6 @@ class GoogleSheet < GoogleDrive::Session
 
   def self.find_x(sheet)
     sheet.rows[8].find_index do |cell|
-      # cell.include?("8/7/18")
       cell.include?(Time.now.strftime("%m/%-d/%y"))
     end + 1
   end
@@ -32,14 +31,7 @@ class GoogleSheet < GoogleDrive::Session
   def self.worksheet(user)
     spreadsheet = @@session.spreadsheet_by_key(user.sheet_key)
     spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(user.mod) }
-    # spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(user.mod) }
   end
-
-  # def self.check_status(user, real_name)
-  #   sheet = self.get_all_sheets(user, real_name)
-  #   binding.pry
-  #   sheet.rows[GoogleSheet.find_y(sheet, real_name) - 1]
-  # end
 
   def self.absences(user, real_name)
     sheet = GoogleSheet.worksheet(user)
@@ -127,5 +119,3 @@ class GoogleSheet < GoogleDrive::Session
   # end
 
 end
-
-# Pry.start
