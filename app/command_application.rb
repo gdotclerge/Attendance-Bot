@@ -55,9 +55,21 @@ class ImHereBot < SlackRubyBot::Bot
     client.say(text: "Awesome, you signed in at #{time}", channel: data.channel)
   end
 
-  operator "new class" do |client, data, match|
-    binding.pry
+  command 'my absences' do |client, data, match|
+    user = User.find_by(slack_id: data.user)
+    real_name = ImHereBot.real_name(client, data)
+    absences = GoogleSheet.absences(user, real_name)
+    client.say(text: "You've been absent #{absences} time(s) in #{user.mod}.", channel: data.channel)
   end
+
+  command 'my latenesses' do |client, data, match|
+    user = User.find_by(slack_id: data.user)
+    real_name = ImHereBot.real_name(client, data)
+    latenesses = GoogleSheet.latenesses(user, real_name)
+    client.say(text: "You've been late #{latenesses} time(s) in #{user.mod}.", channel: data.channel)
+  end
+
+
 
   private
 
