@@ -52,16 +52,7 @@ class ImHereBot < SlackRubyBot::Bot
     real_name = ImHereBot.real_name(client, data)
     user = User.find_by(slack_id: slack_id)
     time = GoogleSheet.post_to_sheet(user, real_name)
-
-    binding.pry
     client.say(text: "Awesome, you signed in at #{time}", channel: data.channel)
-
-
-    # str_arr = match["expression"].split("/")
-    # index = str_arr.index("d") + 1
-    # sheet_code = str_arr[index]
-    # put_cells(client.store.users[data.user]['real_name'])
-    # McColemanTesterBot.is_admin(client)
   end
 
   operator "new class" do |client, data, match|

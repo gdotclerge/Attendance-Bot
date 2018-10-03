@@ -10,17 +10,12 @@ class GoogleSheet < GoogleDrive::Session
     sheet = self.worksheet(user)
     x = self.find_x(sheet)
     y = self.find_y(sheet, real_name)
-
-    binding.pry
-    # x = find_todays_date_by_locating_the_row
-    # y = find_the_person_submitting_the_request_for_column(entered_name)
-
-
-
-
-    worksheet(user)[y,x] = Time.now.strftime("%H:%M")
-    worksheet.save
+    time = Time.now.strftime("%I:%M %p")
+    sheet[y,x] = time
+    sheet.save
+    time
   end
+
 
 
   # def authorizate_worksheet()
@@ -40,23 +35,25 @@ class GoogleSheet < GoogleDrive::Session
   def self.find_x(sheet)
     sheet.rows[8].find_index do |cell|
       cell.include?("8/7/18")
+      # cell.include?(Time.now.strftime("%m/%d/%y"))
     end
   end
 
   def self.find_y(sheet, real_name)
-    binding.pry
-    sheet.rows.find_index{|row| row[0] == real_name}
+    names_arr = sheet.rows.map { |row| row[0] }
+    names_arr.find_index { |name| name == "Lila Wang" } + 1
+    # names_arr.find_index { |name| name == real_name } + 1
   end
 
-    counter = 12
-    while counter < 50 do
-      if worksheet.rows[counter][0] == entered_name
-        return counter + 1
-      end
-      counter += 1
-    end
-
-  end
+  #   counter = 12
+  #   while counter < 50 do
+  #     if worksheet.rows[counter][0] == entered_name
+  #       return counter + 1
+  #     end
+  #     counter += 1
+  #   end
+  #
+  # end
 
   def read_cells()
     worksheet = authorizate_worksheet
@@ -76,17 +73,17 @@ class GoogleSheet < GoogleDrive::Session
   #   end
   # end
 
-  def find_the_person_submitting_the_request_for_column(entered_name)
-
-    worksheet = authorizate_worksheet
-    counter = 12
-    while counter < 50 do
-      if worksheet.rows[counter][0] == entered_name
-        return counter + 1
-      end
-      counter += 1
-    end
-  end
+  # def find_the_person_submitting_the_request_for_column(entered_name)
+  #
+  #   worksheet = authorizate_worksheet
+  #   counter = 12
+  #   while counter < 50 do
+  #     if worksheet.rows[counter][0] == entered_name
+  #       return counter + 1
+  #     end
+  #     counter += 1
+  #   end
+  # end
 
 
 
@@ -94,7 +91,6 @@ class GoogleSheet < GoogleDrive::Session
     spreadsheet = @@session.spreadsheet_by_key(user.sheet_key)
     spreadsheet.worksheets.find { |worksheet| worksheet.title.include?("Mod1") }
     # spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(user.mod) }
-
   end
 
 
