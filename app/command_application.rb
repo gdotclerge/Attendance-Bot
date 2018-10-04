@@ -1,10 +1,9 @@
-# require_relative 'spreadsheet.rb'
-# require 'slack-ruby-bot'
-# require_relative 'command_application.rb'
-# require 'pry'
-
 class ImHereBot < SlackRubyBot::Bot
 
+
+  command 'admin test' do |client, data, match|
+    binding.pry
+  end
 
 
   # ========== ADMIN COMMANDS ===============
@@ -33,7 +32,6 @@ class ImHereBot < SlackRubyBot::Bot
     slack_members = client.store.channels[data.channel].members
 
     slack_members.each do |slack_id|
-
       User.create(slack_id: slack_id, sheet_key: sheet_key)
     end
 
