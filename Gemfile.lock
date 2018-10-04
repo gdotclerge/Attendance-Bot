@@ -42,12 +42,11 @@ GEM
     declarative-option (0.1.0)
     dokku-cli (0.4.0)
       thor (~> 0.19)
+    dotenv (2.5.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    figaro (1.1.1)
-      thor (~> 0.14)
     gli (2.17.2)
     google-api-client (0.21.2)
       addressable (~> 2.5, >= 2.5.1)
@@ -144,7 +143,7 @@ DEPENDENCIES
   activerecord
   celluloid-io
   dokku-cli
-  figaro
+  dotenv
   google_drive
   json
   pg
