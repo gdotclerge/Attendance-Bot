@@ -18,14 +18,15 @@ class GoogleSheet < GoogleDrive::Session
 
   def self.find_x(sheet)
     sheet.rows[8].find_index do |cell|
-      cell.include?(Time.now.strftime("%m/%-d/%y"))
+      # cell.include?(Time.now.strftime("%m/%-d/%y"))
+      cell.include?("10/5/18")
     end + 1
   end
 
   def self.find_y(sheet, real_name)
     names_arr = sheet.rows.map { |row| row[0] }
-    names_arr.find_index { |name| name == 'Michael Coleman' } + 1
-    # names_arr.find_index { |name| name == real_name } + 1
+    # names_arr.find_index { |name| name == 'Michael Coleman' } + 1
+    names_arr.find_index { |name| name == real_name } + 1
   end
 
   def self.worksheet(user)
@@ -54,6 +55,24 @@ class GoogleSheet < GoogleDrive::Session
     end.count
   end
 
+  def self.check_attendance(user)
+    sheet = self.worksheet(user)
+    index = self.find_x(sheet) - 1
+    sheet.rows.map { |row| { row[0] => row[index] } }[9..-3]
+  end
+
+  def self.attendance(user)
+    sheet = self.worksheet(user)
+    index = self.find_x(sheet) - 1
+    student_arr = sheet.rows[9..-3]
+    student_arr.map do |sa|
+      if (sa[index].length < 1)
+        sa[0]
+      end
+    end
+  end
+
+# sheet.rows[9..-1]
 
 
 

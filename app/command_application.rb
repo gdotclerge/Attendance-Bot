@@ -40,6 +40,31 @@ class ImHereBot < SlackRubyBot::Bot
     client.say(text: "#{slack_members.count} were initialized.", channel: data.channel)
   end
 
+  command 'admin check attendance' do |client, data, match|
+    user = User.find_by(slack_id: data.user)
+    attendance = GoogleSheet.check_attendance(user)
+    client.say(text: "#{attendance}", channel: data.channel)
+  end
+
+  command 'admin attendance' do |client, data, match|
+    user = User.find_by(slack_id: data.user)
+    @slack_client ||= ::Slack::Web::Client.new
+    im_channel = @slack_client.im_open(user: data.user)['channel']['id']
+    students = GoogleSheet.attendance(user)
+    students_str = students.select { |student| student != nil }.join(", ")
+
+    # client.store.users.find do |k, v|
+    #   binding.pry
+    #   v.real_name == "Garry Clerge"
+    # end
+
+    client.say(text: "#{students.select { |student| student != nil }.join(", ")}", channel: im_channel)
+    binding.pry
+
+  end
+
+
+
   # ========== STUDENT COMMANDS ===============
 
   command 'present' do |client, data, match|

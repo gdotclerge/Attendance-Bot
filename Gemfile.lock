@@ -40,6 +40,7 @@ GEM
     concurrent-ruby (1.0.5)
     declarative (0.0.10)
     declarative-option (0.1.0)
+    dotenv (2.5.0)
     faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
@@ -141,6 +142,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   celluloid-io
+  dotenv
   figaro
   google_drive
   json
