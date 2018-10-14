@@ -2,7 +2,7 @@ class ImHereBot < SlackRubyBot::Bot
 
 
   command 'admin test' do |client, data, match|
-    binding.pry
+    client.say(text: "Currently Deployed and working", channel: data.channel)
   end
 
 
