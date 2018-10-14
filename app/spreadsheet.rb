@@ -1,11 +1,11 @@
 class GoogleSheet < GoogleDrive::Session
 
   def self.google_credentials
-    if ENV['GDRIVE_AUTH']
+    # if ENV['GDRIVE_AUTH']
       StringIO.new(Base64.decode64(ENV['GDRIVE_AUTH']))
-    else
+    # else
       'config/config.json'
-    end
+    # end
   end
 
   @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
