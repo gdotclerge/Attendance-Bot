@@ -1,10 +1,14 @@
-require 'bundler'
-require 'pry'
-Bundler.require
-
 class GoogleSheet < GoogleDrive::Session
 
-  @@session = GoogleSheet.from_service_account_key("config/config.json")
+  def self.google_credentials
+    if ENV['GDRIVE_AUTH']
+      StringIO.new(Base64.decode64(ENV['GDRIVE_AUTH']))
+    else
+      'config/config.json'
+    end
+  end
+
+  @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
 
   def self.post_to_sheet(user, real_name)
     sheet = self.worksheet(user)
