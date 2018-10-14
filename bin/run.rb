@@ -1,3 +1,4 @@
+puts ENV['SLACK_API_TOKEN']
 require_relative '../config/environment'
 
 Dotenv.load('config/slack_credentials.env')
