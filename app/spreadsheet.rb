@@ -8,7 +8,7 @@ class GoogleSheet < GoogleDrive::Session
     # end
   end
 
-  @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
+  # @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
 
   def self.post_to_sheet(user, real_name)
     sheet = self.worksheet(user)
