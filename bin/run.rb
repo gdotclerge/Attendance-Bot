@@ -1,6 +1,6 @@
 require_relative '../config/environment'
 
-Dotenv.load('config/google_credentials.env', 'config/slack_credentials.env')
+Dotenv.load('config/slack_credentials.env')
 
 
 Slack.configure do |config|
