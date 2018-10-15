@@ -9,7 +9,7 @@ production:
  adapter: postgresql
  encoding: unicode
  database: attendance-slackbot
- username:
- password:
+ username: dokku-postgres-attendance-slackbot
+ password: <%= ENV['DB_PASSWORD'] =>
  host: <%= ENV['DB_HOST'] =>
  port: <%= ENV['DB_PORT'] =>
