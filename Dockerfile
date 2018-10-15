@@ -1,11 +1,10 @@
 FROM ruby:2.3.7
-
+RUN echo ${SLACK_API_TOKEN}
 
 WORKDIR /usr/src/Attendance-Bot
 
 COPY ./ ./
 
 RUN bundle install
-RUN ruby bin/run.rb
 
-CMD ["/bin/bash"]
+CMD ruby bin/run.rb
