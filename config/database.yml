@@ -1,0 +1,15 @@
+development:
+ adapter: postgresql
+ encoding: unicode
+ database: im_here_bot
+ username: <%= ENV['USERNAME_LOCAL'] =>
+ password:
+
+production:
+ adapter: postgresql
+ encoding: unicode
+ database: attendance-slackbot
+ username:
+ password:
+ host: <%= ENV['DB_HOST'] =>
+ port: <%= ENV['DB_PORT'] =>
