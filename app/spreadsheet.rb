@@ -1,14 +1,14 @@
 class GoogleSheet < GoogleDrive::Session
 
   def self.google_credentials
-    # if ENV['GDRIVE_AUTH']
+    if ENV['GDRIVE_AUTH']
       StringIO.new(Base64.decode64(ENV['GDRIVE_AUTH']))
-    # else
+    else
       'config/config.json'
-    # end
+    end
   end
 
-  # @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
+  @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
 
   def self.post_to_sheet(user, real_name)
     sheet = self.worksheet(user)
