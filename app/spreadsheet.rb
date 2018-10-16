@@ -10,14 +10,12 @@ class GoogleSheet < GoogleDrive::Session
 
   @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
 
-  def self.post_to_sheet(user, real_name)
+  def self.post_to_sheet(user, real_name, time)
     sheet = self.worksheet(user)
     x = self.find_x(sheet)
     y = self.find_y(sheet, real_name)
-    time = Time.now.strftime("%I:%M %p")
     sheet[y,x] = time
     sheet.save
-    time
   end
 
   def self.find_x(sheet)

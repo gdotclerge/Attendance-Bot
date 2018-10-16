@@ -2,7 +2,7 @@ development:
  adapter: postgresql
  encoding: unicode
  database: im_here_bot
- username: ENV['USERNAME_LOCAL']
+ username: garry.clerge
  password:
 
 production:
