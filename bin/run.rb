@@ -1,5 +1,4 @@
 require_relative '../config/environment'
-
 Dotenv.load('config/.env')
 
 Slack.configure do |config|
