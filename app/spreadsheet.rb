@@ -22,8 +22,8 @@ class GoogleSheet < GoogleDrive::Session
 
   def self.find_x(sheet)
     sheet.rows[8].find_index do |cell|
-      # cell.include?(Time.now.strftime("%m/%-d/%y"))
-      cell.include?("10/5/18")
+      cell.include?(Time.now.strftime("%m/%-d/%y"))
+      # cell.include?("10/5/18")
     end + 1
   end
 
