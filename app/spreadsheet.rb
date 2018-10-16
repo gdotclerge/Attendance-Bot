@@ -23,13 +23,11 @@ class GoogleSheet < GoogleDrive::Session
   def self.find_x(sheet)
     sheet.rows[8].find_index do |cell|
       cell.include?(Time.now.strftime("%m/%-d/%y"))
-      # cell.include?("10/5/18")
     end + 1
   end
 
   def self.find_y(sheet, real_name)
     names_arr = sheet.rows.map { |row| row[0] }
-    # names_arr.find_index { |name| name == 'Michael Coleman' } + 1
     names_arr.find_index { |name| name == real_name } + 1
   end
 
@@ -74,6 +72,11 @@ class GoogleSheet < GoogleDrive::Session
         sa[0]
       end
     end
+  end
+
+  def master_sheet
+    spreadsheet = @@session.spreadsheet_by_key('1E4xZZnDXIlrH7EYP6xMMEaXrN_qQVbayJCiLEt3rBN0')
+    spreadsheet.worksheets[0]
   end
 
 # sheet.rows[9..-1]

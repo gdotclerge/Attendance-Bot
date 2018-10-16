@@ -45,6 +45,7 @@ class ImHereBot < SlackRubyBot::Bot
   end
 
   command 'admin attendance' do |client, data, match|
+    binding.pry
     user = User.find_by(slack_id: data.user)
     @slack_client ||= ::Slack::Web::Client.new
     im_channel = @slack_client.im_open(user: data.user)['channel']['id']
@@ -57,9 +58,10 @@ class ImHereBot < SlackRubyBot::Bot
     # end
 
     client.say(text: "#{students.select { |student| student != nil }.join(", ")}", channel: im_channel)
-    binding.pry
-
   end
+
+
+
 
 
 
