@@ -4,6 +4,4 @@ WORKDIR /usr/src/Attendance-Bot
 
 COPY ./ ./
 
-
-
 CMD ruby bin/run.rb
