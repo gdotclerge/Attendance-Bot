@@ -4,4 +4,6 @@ WORKDIR /usr/src/Attendance-Bot
 
 COPY ./ ./
 
+RUN bundle install
+
 CMD ruby bin/run.rb
