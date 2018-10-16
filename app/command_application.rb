@@ -69,11 +69,15 @@ class ImHereBot < SlackRubyBot::Bot
 
   command 'present' do |client, data, match|
     slack_id = data.user
+
     real_name = ImHereBot.real_name(client, data)
     user = User.find_by(slack_id: slack_id)
     time = Time.now.getlocal(client.store.users[data.user].tz_offset).strftime("%I:%M %p")
-    GoogleSheet.post_to_sheet(user, real_name, time)
-    client.say(text: "Awesome, you signed in at #{time}", channel: data.channel)
+    checkedTime = GoogleSheet.post_to_sheet(user, real_name, time)
+
+    
+    checkedTime ? client.say(text: "Awesome, you signed in at #{time}", channel: data.channel) : client.say(text: "We couldn't sign you in", channel: data.channel)
+
   end
 
   command 'my absences' do |client, data, match|
@@ -104,7 +108,8 @@ class ImHereBot < SlackRubyBot::Bot
 
   def self.permitted?(client, data, match)
     admin_status = client.store.users[data.user].is_admin
-    ImHereBot.admin_command?(match) ? admin_status : !admin_status
+    # ImHereBot.admin_command?(match) ? admin_status : !admin_status
+    ImHereBot.admin_command?(match) ? admin_status : true
   end
 
   def self.user(client, data)

@@ -14,19 +14,36 @@ class GoogleSheet < GoogleDrive::Session
     sheet = self.worksheet(user)
     x = self.find_x(sheet)
     y = self.find_y(sheet, real_name)
-    sheet[y,x] = time
-    sheet.save
+
+    # binding.pry
+
+    if(x && y)
+      sheet[y,x] = time
+      sheet.save
+      time
+    else
+      nil
+    end
+    
   end
 
   def self.find_x(sheet)
-    sheet.rows[8].find_index do |cell|
+    index = sheet.rows[8].find_index do |cell|
       cell.include?(Time.now.strftime("%m/%-d/%y"))
-    end + 1
+    end
+
+    # If we can't find the date, return nil
+    index ? index + 1 : nil
   end
 
   def self.find_y(sheet, real_name)
     names_arr = sheet.rows.map { |row| row[0] }
-    names_arr.find_index { |name| name == real_name } + 1
+
+    index = names_arr.find_index do |name|
+      name == real_name
+    end
+
+    index ? index + 1 : nil
   end
 
   def self.worksheet(user)
@@ -38,13 +55,7 @@ class GoogleSheet < GoogleDrive::Session
     sheet = GoogleSheet.worksheet(user)
     rows = sheet.rows[GoogleSheet.find_y(sheet, real_name) - 1][4..-1]
     rows.select { |time| time == "absent" }.count
-    # times = []
-    # mods.each do |mod|
-    #   sheet = spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(mod) }
-    #   rows = sheet.rows[GoogleSheet.find_y(sheet, real_name) - 1]
-    #   times.push(rows[4..-1])
-    # end
-    # num = times.flatten.select { |time| time == "absent" }.count
+
   end
 
   def self.latenesses(user, real_name)
