@@ -24,7 +24,7 @@ class GoogleSheet < GoogleDrive::Session
     else
       nil
     end
-    
+
   end
 
   def self.find_x(sheet)
@@ -40,7 +40,7 @@ class GoogleSheet < GoogleDrive::Session
     names_arr = sheet.rows.map { |row| row[0] }
 
     index = names_arr.find_index do |name|
-      name == real_name
+      name.downcase == real_name
     end
 
     index ? index + 1 : nil

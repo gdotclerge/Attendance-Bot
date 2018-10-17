@@ -75,7 +75,7 @@ class ImHereBot < SlackRubyBot::Bot
     time = Time.now.getlocal(client.store.users[data.user].tz_offset).strftime("%I:%M %p")
     checkedTime = GoogleSheet.post_to_sheet(user, real_name, time)
 
-    
+
     checkedTime ? client.say(text: "Awesome, you signed in at #{time}", channel: data.channel) : client.say(text: "We couldn't sign you in", channel: data.channel)
 
   end
@@ -117,7 +117,7 @@ class ImHereBot < SlackRubyBot::Bot
   end
 
   def self.real_name(client, data)
-    self.user(client, data).real_name
+    self.user(client, data).real_name.downcase
   end
 
   def self.admin_command?(match)
