@@ -13,7 +13,9 @@ module ClientMethods
     data.user
   end
 
-  user = User.find_by(slack_id: c.slack_id(data))
+  def user(data)
+    User.find_by(slack_id: self.slack_id(data))
+  end
 
   def real_name(data)
     self.slack_user(data).real_name.downcase

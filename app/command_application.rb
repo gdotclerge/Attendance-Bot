@@ -8,53 +8,51 @@ class ImHereBot < SlackRubyBot::Bot
 
   # ========== ADMIN COMMANDS ===============
 
-  command 'admin set mod' do |client, data, match|
-    # check if spreadsheet is set
-    # check if tab exists on set spreadsheet (is valid mod number?)
 
-    client.extend(ClientMethods)
+  command 'admin set mod' do |c, data, match|
+    c.extend(ClientMethods)
 
     mod = "Mod" + match["expression"]
 
-    slack_members = client.slack_members(data)
-
-    slack_members.each do |slack_id|
+    c.slack_members(data).each do |slack_id|
       user = User.find_by(slack_id: slack_id)
       user.update_attributes(mod: mod)
     end
 
-    client.say(text: "Updated #{slack_members.count} users to #{mod}.", channel: data.channel)
+    # check if spreadsheet is set
+    # check if tab exists on set spreadsheet (is valid mod number?)
+    client.say(text: "Updated #{c.slack_members(data).count} users to #{mod}.", channel: data.channel)
   end
 
-  command 'admin init' do |client, data, match|
-    # check if spreadsheet exists
-    # Spreadsheet.exists?(sheet_key)
 
-    client.extend(ClientMethods)
+  command 'admin init' do |c, data, match|
+    c.extend(ClientMethods)
 
-    sheet_key = client.spreadsheet_key(match)
-    slack_members = client.slack_members(data)
-
-    slack_members.each do |slack_id|
-      User.create(slack_id: slack_id, sheet_key: sheet_key)
+    c.slack_members(data).each do |slack_id|
+      User.create(slack_id: slack_id, sheet_key: c.spreadsheet_key(match))
     end
 
+    # check if spreadsheet exists
+    # Spreadsheet.exists?(sheet_key)
     client.say(text: "#{slack_members.count} were initialized.", channel: data.channel)
   end
 
-  command 'admin check attendance' do |client, data, match|
-    user = User.find_by(slack_id: data.user)
-    attendance = GoogleSheet.check_attendance(user)
+
+  command 'admin check attendance' do |c, data, match|
+    c.extend(ClientMethods)
+
+    attendance = GoogleSheet.check_attendance(c.user(data))
 
     client.say(text: "#{attendance}", channel: data.channel)
   end
 
-  command 'admin attendance' do |client, data, match|
-    user = User.find_by(slack_id: data.user)
+
+  command 'admin attendance' do |c, data, match|
+    c.extend(ClientMethods)
 
     @slack_client ||= ::Slack::Web::Client.new
     im_channel = @slack_client.im_open(user: data.user)['channel']['id']
-    students = GoogleSheet.attendance(user)
+    students = GoogleSheet.attendance(c.user(data))
     students_str = students.select { |student| student != nil }.join(", ")
 
     # client.store.users.find do |k, v|
@@ -68,31 +66,30 @@ class ImHereBot < SlackRubyBot::Bot
 
   # ========== STUDENT COMMANDS ===============
 
-  command 'present' do |client, data, match|
+
+  command 'present' do |c, data, match|
     c.extend(ClientMethods)
 
-    user = User.find_by(slack_id: c.slack_id(data))
-    checkedTime = GoogleSheet.post_to_sheet(user, c.real_name(data), c.current_time(data))
+    checkedTime = GoogleSheet.post_to_sheet(c.user(data), c.real_name(data), c.current_time(data))
 
-    # c.respond(msg, data)
-    # Should send if succesful or send error message if not
-
+    # Need to figure out Error handling. Should have something liket the below on every method. Can abstract out
+    # Maybe send necessary info into method that handles responding
     checkedTime ? c.say(text: "Awesome, you signed in at #{time}", channel: data.channel) : c.say(text: "We couldn't sign you in", channel: data.channel)
   end
 
-  command 'my absences' do |client, data, match|
-    user = User.find_by(slack_id: data.user)
 
-    real_name = ImHereBot.real_name(client, data)
-    absences = GoogleSheet.absences(user, real_name)
+  command 'my absences' do |c, data, match|
+    c.extend(ClientMethods)
+
+    absences = GoogleSheet.absences(c.user(data), c.real_name(data))
     client.say(text: "You've been absent #{absences} time(s) in #{user.mod}.", channel: data.channel)
   end
 
-  command 'my latenesses' do |client, data, match|
-    user = User.find_by(slack_id: data.user)
 
-    real_name = client.real_name(data)
-    latenesses = GoogleSheet.latenesses(user, real_name)
+  command 'my latenesses' do |c, data, match|
+    c.extend(ClientMethods)
+
+    latenesses = GoogleSheet.latenesses(c.user(data), c.real_name(data))
     client.say(text: "You've been late #{latenesses} time(s) in #{user.mod}.", channel: data.channel)
   end
 
