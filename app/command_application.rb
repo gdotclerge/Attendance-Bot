@@ -16,7 +16,7 @@ class ImHereBot < SlackRubyBot::Bot
 
     mod = "Mod" + match["expression"]
 
-    slack_members = client.get_slack_members(data)
+    slack_members = client.slack_members(data)
 
     slack_members.each do |slack_id|
       user = User.find_by(slack_id: slack_id)
@@ -33,7 +33,7 @@ class ImHereBot < SlackRubyBot::Bot
     client.extend(ClientMethods)
 
     sheet_key = client.spreadsheet_key(match)
-    slack_members = client.get_slack_members(data)
+    slack_members = client.slack_members(data)
 
     slack_members.each do |slack_id|
       User.create(slack_id: slack_id, sheet_key: sheet_key)
@@ -69,20 +69,20 @@ class ImHereBot < SlackRubyBot::Bot
   # ========== STUDENT COMMANDS ===============
 
   command 'present' do |client, data, match|
-    slack_id = data.user
+    c.extend(ClientMethods)
 
+    user = User.find_by(slack_id: c.slack_id(data))
+    checkedTime = GoogleSheet.post_to_sheet(user, c.real_name(data), c.current_time(data))
 
-    real_name = client.real_name(data)
-    user = User.find_by(slack_id: slack_id)
-    time = client.current_time(data)
-    checkedTime = GoogleSheet.post_to_sheet(user, real_name, time)
+    # c.respond(msg, data)
+    # Should send if succesful or send error message if not
 
-    checkedTime ? client.say(text: "Awesome, you signed in at #{time}", channel: data.channel) : client.say(text: "We couldn't sign you in", channel: data.channel)
-
+    checkedTime ? c.say(text: "Awesome, you signed in at #{time}", channel: data.channel) : c.say(text: "We couldn't sign you in", channel: data.channel)
   end
 
   command 'my absences' do |client, data, match|
     user = User.find_by(slack_id: data.user)
+
     real_name = ImHereBot.real_name(client, data)
     absences = GoogleSheet.absences(user, real_name)
     client.say(text: "You've been absent #{absences} time(s) in #{user.mod}.", channel: data.channel)
@@ -90,6 +90,7 @@ class ImHereBot < SlackRubyBot::Bot
 
   command 'my latenesses' do |client, data, match|
     user = User.find_by(slack_id: data.user)
+
     real_name = client.real_name(data)
     latenesses = GoogleSheet.latenesses(user, real_name)
     client.say(text: "You've been late #{latenesses} time(s) in #{user.mod}.", channel: data.channel)
