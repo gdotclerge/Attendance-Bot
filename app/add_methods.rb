@@ -1,5 +1,5 @@
 module AddMethods
-
+  
   module Match
     def spreadsheet_key
       str_arr = self["expression"].split("/")
@@ -42,7 +42,7 @@ module AddMethods
       Time.now.getlocal(self.user(data).tz_offset).strftime("%I:%M %p")
     end
   end
-  
+
 end
 
 
