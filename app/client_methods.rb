@@ -2,7 +2,7 @@ module ClientMethods
 
   def permitted?(data, match)
     admin_status = self.slack_user(data).is_admin
-    self.admin_command?(match) ? admin_status : !admin_status
+    self.admin_command?(match) ? admin_status : admin_status
   end
 
   def slack_user(data)
@@ -25,8 +25,8 @@ module ClientMethods
     self.store.channels[data.channel].members
   end
 
-  def time(data)
-    Time.now.getlocal(self.user(data).tz_offset).strftime("%I:%M %p")
+  def local_time(data)
+    Time.now.getlocal(self.slack_user(data).tz_offset).strftime("%I:%M %p")
   end
 
 

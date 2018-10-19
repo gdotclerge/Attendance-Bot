@@ -9,47 +9,47 @@ class GoogleSheet < GoogleDrive::Session
   end
 
   @@session = GoogleSheet.from_service_account_key(GoogleSheet.google_credentials)
+  # continues to fail silently, unable to get an error or nil back to the command class
+  # def self.valid_spreadsheet?(sheet_key)
+  #   @@session.file_by_id(sheet_key) ? true : false
+  # end
 
-  def self.post_to_sheet(user, real_name, time)
+  def self.post_to_sheet(user, name, time)
     sheet = self.worksheet(user)
     x = self.find_x(sheet)
-    y = self.find_y(sheet, real_name)
-
-    # binding.pry
-
+    y = self.find_y(sheet, name)
     if(x && y)
       sheet[y,x] = time
-      sheet.save
+      let x = sheet.save
       time
     else
       nil
     end
-
   end
+
 
   def self.find_x(sheet)
     index = sheet.rows[8].find_index do |cell|
       cell.include?(Time.now.strftime("%m/%-d/%y"))
     end
-
-    # If we can't find the date, return nil
     index ? index + 1 : nil
   end
+
 
   def self.find_y(sheet, real_name)
     names_arr = sheet.rows.map { |row| row[0] }
-
     index = names_arr.find_index do |name|
       name.downcase == real_name
     end
-
     index ? index + 1 : nil
   end
+
 
   def self.worksheet(user)
     spreadsheet = @@session.spreadsheet_by_key(user.sheet_key)
     spreadsheet.worksheets.find { |worksheet| worksheet.title.include?(user.mod) }
   end
+
 
   def self.absences(user, real_name)
     sheet = GoogleSheet.worksheet(user)
@@ -66,17 +66,17 @@ class GoogleSheet < GoogleDrive::Session
     end.count
   end
 
-  def self.check_attendance(user)
-    sheet = self.worksheet(user)
-    index = self.find_x(sheet) - 1
-    sheet.rows.map { |row| { row[0] => row[index] } }[9..-3]
-  end
+  # def self.check_attendance(user)
+  #   sheet = self.worksheet(user)
+  #   index = self.find_x(sheet) - 1
+  #   sheet.rows.map { |row| { row[0] => row[index] } }[9..-3]
+  # end
 
   def self.attendance(user)
     sheet = self.worksheet(user)
     index = self.find_x(sheet) - 1
     student_arr = sheet.rows[9..-3]
-    student_arr.map do |sa|
+    test = student_arr.map do |sa|
       if (sa[index].length < 1)
         sa[0]
       end

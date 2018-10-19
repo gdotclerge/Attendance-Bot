@@ -27,12 +27,12 @@ class AttendanceBot < SlackRubyBot::Bot
 
   # ====== Testing Commands ========
 
-  command 'admin test' do |client, data, match|
-    client.say(text: "Admin// Currently Deployed and working", channel: data.channel)
-  end
-
-  command 'admin test' do |client, data, match|
-    client.say(text: "Student// Currently Deployed and working", channel: data.channel)
-  end
+  # command 'admin test' do |client, data, match|
+  #   client.say(text: "Admin// Currently Deployed and working", channel: data.channel)
+  # end
+  #
+  # command 'admin test' do |client, data, match|
+  #   client.say(text: "Student// Currently Deployed and working", channel: data.channel)
+  # end
 
 end
