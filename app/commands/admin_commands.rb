@@ -1,56 +1,53 @@
+require_relative '../mixins/subscribe.rb'
+
+
 class AdminCommands < AttendanceBot
+  include Mixins::Subscribe
 
 
-command 'admin set mod' do |c, data, match|
-  c.extend(ClientMethods)
+  subscribe_command 'admin set mod' do |client, data, match|
+    client.slack_members(data).each do |slack_id|
+      user = User.find_by(slack_id: slack_id)
 
-  mod = "Mod" + match["expression"]
+      # Do we need to format it this way? Couldn't we just pass the integer in?
+      user.update_attributes(mod: "Mod" + match["expression"])
 
-  c.slack_members(data).each do |slack_id|
-    user = User.find_by(slack_id: slack_id)
-    user.update_attributes(mod: mod)
+      # maybe should use begin rescue for updating to make sure they actually do update. If they do, then we return how many members were actually updated
+    end
+
+    # check if spreadsheet is set
+    # check if tab exists on set spreadsheet (is valid mod number?)
+    client.say(text: "Updated #{client.slack_members(data).count} users to #{mod}.", channel: data.channel)
   end
 
-  # check if spreadsheet is set
-  # check if tab exists on set spreadsheet (is valid mod number?)
-  client.say(text: "Updated #{c.slack_members(data).count} users to #{mod}.", channel: data.channel)
-end
 
+  subscribe_command 'admin init' do |client, data, match|
+    client.slack_members(data).each do |slack_id|
+      user = User.find_or_create(slack_id: slack_id)
 
-command 'admin init' do |c, data, match|
-  c.extend(ClientMethods)
+      user.update_attributes(sheet_key: match.spreadsheet_key)
+    end
 
-  c.slack_members(data).each do |slack_id|
-    User.create(slack_id: slack_id, sheet_key: c.spreadsheet_key(match))
+    # check if spreadsheet exists
+    # Spreadsheet.exists?(sheet_key)
+    client.say(text: "#{slack_members.count} were initialized.", channel: data.channel)
   end
 
-  # check if spreadsheet exists
-  # Spreadsheet.exists?(sheet_key)
-  client.say(text: "#{slack_members.count} were initialized.", channel: data.channel)
-end
+
+  subscribe_command 'admin check attendance' do |c, data, match|
+    attendance = GoogleSheet.check_attendance(client.user(data))
+
+    client.say(text: "#{attendance}", channel: data.channel)
+  end
 
 
-command 'admin check attendance' do |c, data, match|
-  c.extend(ClientMethods)
+  subscribe_command 'admin attendance' do |c, data, match|
 
-  attendance = GoogleSheet.check_attendance(c.user(data))
+    @slack_client ||= ::Slack::Web::Client.new
+    im_channel = @slack_client.im_open(user: data.user)['channel']['id']
+    students = GoogleSheet.attendance(client.user(data))
+    students_str = students.select { |student| student != nil }.join(", ")
 
-  client.say(text: "#{attendance}", channel: data.channel)
-end
-
-
-command 'admin attendance' do |c, data, match|
-  c.extend(ClientMethods)
-
-  @slack_client ||= ::Slack::Web::Client.new
-  im_channel = @slack_client.im_open(user: data.user)['channel']['id']
-  students = GoogleSheet.attendance(c.user(data))
-  students_str = students.select { |student| student != nil }.join(", ")
-
-  # client.store.users.find do |k, v|
-  #   binding.pry
-  #   v.real_name == "Garry Clerge"
-  # end
-
-  client.say(text: "#{students.select { |student| student != nil }.join(", ")}", channel: im_channel)
+    client.say(text: "#{students.select { |student| student != nil }.join(", ")}", channel: im_channel)
+  end
 end
