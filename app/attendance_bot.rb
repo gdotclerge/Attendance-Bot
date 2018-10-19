@@ -18,8 +18,8 @@ class AttendanceBot < SlackRubyBot::Bot
   #
   #   respond with appropriate message (either error or success message)
   #   client.respond(msg)
+  #   => "You can't do that action" or "Great your signed in"
   #
-  #   client.say(text: "Admin// Currently Deployed and working", channel: data.channel)
   # end
 
 
