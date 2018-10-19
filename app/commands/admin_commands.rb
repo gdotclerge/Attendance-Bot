@@ -4,7 +4,6 @@ require_relative '../mixins/subscribe.rb'
 class AdminCommands < AttendanceBot
   include Mixins::Subscribe
 
-
   subscribe_command 'admin set mod' do |client, data, match|
     client.slack_members(data).each do |slack_id|
       user = User.find_by(slack_id: slack_id)
@@ -34,14 +33,16 @@ class AdminCommands < AttendanceBot
   end
 
 
-  subscribe_command 'admin check attendance' do |c, data, match|
+  subscribe_command 'admin check attendance' do |client, data, match|
     attendance = GoogleSheet.check_attendance(client.user(data))
+    # What's the difference between this command and admin attendance?
 
     client.say(text: "#{attendance}", channel: data.channel)
   end
 
 
-  subscribe_command 'admin attendance' do |c, data, match|
+  subscribe_command 'admin attendance' do |client, data, match|
+    # need a walk through of how this works. Wondering if we can use the client given instead of creating new one below
 
     @slack_client ||= ::Slack::Web::Client.new
     im_channel = @slack_client.im_open(user: data.user)['channel']['id']
