@@ -44,13 +44,16 @@ end
 
 command 'admin attendance' do |client, data, match|
   client.extend(ClientMethods)
-
+  students = GoogleSheet.attendance(client.user(data)).select { |student| student != nil }
   @slack_client ||= ::Slack::Web::Client.new
+  student_id = client.store.users.values.select do |user|
+    user.real_name ? user.real_name == students[0] : false
+  end[0].id
   im_channel = @slack_client.im_open(user: data.user)['channel']['id']
-  students = GoogleSheet.attendance(client.user(data))
-  students_str = students.select { |student| student != nil }.join(", ")
-  if students_str.length > 0
-    client.say(text: "#{students_str} did not check in, I've sent them a DM reminder", channel: im_channel)
+  student_channel = @slack_client.im_open(user: student_id)['channel']['id']
+  if students.length > 0
+    client.say(text: "#{students.join(", ")} did not check in, I've sent them a DM reminder", channel: im_channel)
+    client.say(text: "Whoa, instructors are checking attendance, make sure you check in!", channel: student_channel)
   else
     client.say(text: "Nice! Everyone checked in!", channel: im_channel)
   end

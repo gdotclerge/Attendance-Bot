@@ -2,7 +2,7 @@ module ClientMethods
 
   def permitted?(data, match)
     admin_status = self.slack_user(data).is_admin
-    self.admin_command?(match) ? admin_status : admin_status
+    self.admin_command?(match) ? admin_status : !admin_status
   end
 
   def slack_user(data)
