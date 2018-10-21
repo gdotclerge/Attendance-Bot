@@ -4,15 +4,23 @@ class StudentCommands < AttendanceBot
   include Mixins::Subscribe
 
   subscribe_command 'present' do |client, data, match|
-    checkedTime = GoogleSheet.post_to_sheet(client.user(data), client.real_name(data), client.current_time(data))
+    # is a student, ie, is not an admin
+    #
 
-    # Need to figure out Error handling. Should have something like the below on every method. Can abstract out
-    # Maybe send necessary info into method that handles responding
-    if(checkedTime)
-      c.say(text: "Awesome, you signed in at #{checkedTime}", channel: data.channel)
+    if client.is_student?
+      client.say(text: "You're not a student...", channel: data.channel)
     else
-      c.say(text: "We couldn't sign you in", channel: data.channel)
-    end
+      client.say(text: "You're a student.", channel: data.channel)
+
+    # checkedTime = GoogleSheet.post_to_sheet(client.user(data), client.real_name(data), client.current_time(data))
+    #
+    # # Need to figure out Error handling. Should have something like the below on every method. Can abstract out
+    # # Maybe send necessary info into method that handles responding
+    # if(checkedTime)
+    #   c.say(text: "Awesome, you signed in at #{checkedTime}", channel: data.channel)
+    # else
+    #   c.say(text: "We couldn't sign you in", channel: data.channel)
+    # end
   end
 
 

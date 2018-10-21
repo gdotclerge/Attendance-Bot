@@ -1,5 +1,4 @@
-module SlackTimelyBot
-  module Commands
+module GDrive
     module Mixins
       module Subscribe
         extend ActiveSupport::Concern
@@ -7,15 +6,18 @@ module SlackTimelyBot
 
         module ClassMethods
           # and don't quite understand this module...think it has something to do with ActiveSupport::Concern tho
-          def subscribe_command(*values, &_block)
-            command(*values) do |client, data, match|
+          def subscribe_session
 
-              client.extend(SlackTimelyBot::AddMethods::Client)
-              match.extend(SlackTimelyBot::AddMethods::Match)
+            session = GDrive.Authenticate.session
 
-              yield client, data, match
+            session.extend(GDrive::AddMethods::Session)
 
-            end
+            session.
+            session.
+
+            yield session
+
+
           end
 
         end

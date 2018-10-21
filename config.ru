@@ -1,10 +1,16 @@
-require_relative '../config/environment'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 
-Dotenv.load('config/.env')
+require 'dotenv'
+Dotenv.load
+
+require 'slack-timelybot'
+require 'web'
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
 end
+
+Thread.abort_on_exception = true
 
 Thread.new do
   begin
@@ -15,3 +21,5 @@ Thread.new do
     raise e
   end
 end
+
+run SlackTimelyBot::Web
