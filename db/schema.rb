@@ -10,15 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_201451) do
+ActiveRecord::Schema.define(version: 2018_10_21_202030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "mods", force: :cascade do |t|
+    t.integer "number"
+  end
+
+  create_table "sheets", force: :cascade do |t|
+    t.string "sheet_key"
+    t.string "url"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "slack_id"
-    t.string "sheet_key"
-    t.string "mod"
+    t.integer "sheet_id"
+    t.integer "mod_id"
   end
 
 end

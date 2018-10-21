@@ -117,6 +117,7 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    require_all (2.0.0)
     retriable (3.1.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
@@ -190,6 +191,7 @@ DEPENDENCIES
   puma
   rack-test
   rake
+  require_all
   rspec
   sinatra
   sinatra-activerecord

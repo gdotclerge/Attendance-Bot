@@ -1,8 +1,10 @@
-require_relative 'config/environment'
-require 'active_record'
-require 'sinatra/activerecord/rake'
+require 'pry'
+require 'sinatra/activerecord'
+require "sinatra/activerecord/rake"
+
+ActiveRecord::Base.logger = false
 
 desc 'starts a console'
-task :console do
- Pry.start
-end
+  task :console do
+   Pry.start
+  end

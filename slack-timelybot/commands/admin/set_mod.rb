@@ -9,6 +9,8 @@ module SlackTimelyBot
           update_success = []
           mod = _match["expression"].to_i
 
+          binding.pry
+
           client.slack_members(data).each do |slack_id|
             user = User.find_by(slack_id: slack_id)
             if(user)

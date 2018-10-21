@@ -1,6 +1,6 @@
 require 'pry'
 
-require ''
+require 'sinatra/activerecord'
 
 require 'google_drive'
 require 'g-drive/authenticate'
