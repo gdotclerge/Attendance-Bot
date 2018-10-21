@@ -21,7 +21,7 @@ module SlackTimelyBot
           `@timelybot admin check attendance`: returns list of everyone in channel in two columns - those who have checked in for that day and those who haven't yet. Only works in official student channels.
           `@timelybot admin check status`: returns table of everyone who is close and in violation of attendance policy.
 
-          _Everyday tasks_
+          _Extras_
           `@timelybot admin founder`: pay homage.
 
           *Contact*
