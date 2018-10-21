@@ -4,9 +4,9 @@ module SlackTimelyBot
       class Present < SlackRubyBot::Commands::Base
         include SlackTimelyBot::Commands::Mixins::Subscribe
 
-        subscribe_command 'present', 'here' do |client, data, _match|
+        subscribe_command 'present', 'here', 'signin' do |client, data, _match|
           if client.is_student?(data, _match)
-            client.say(text: "You can't check in, you're not a student.", channel: data.channel)
+            client.say(text: "It looks like you're an admin, not a student. Only students can sign in.", channel: data.channel)
           else
             session = GDrive::Session.start
             sheet = session.get_sheet(client.user(data))
