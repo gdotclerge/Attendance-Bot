@@ -10,8 +10,6 @@ module GDrive
       index ? index + 1 : nil
     end
 
-
-
     def find_y(real_name)
       names_arr = self.rows.map { |row| row[0] }
 
@@ -22,14 +20,18 @@ module GDrive
       index ? index + 1 : nil
     end
 
-    def post_time(real_name)
-      time = 
+    def post(real_name, time)
 
       x = self.find_x
       y = self.find_y(real_name)
 
       if(x && y)
         self[y,x] = time
+        let x = sheet.save
+        time
+      else
+        nil
+      end
     end
 
   end

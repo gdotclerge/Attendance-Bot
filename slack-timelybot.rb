@@ -3,7 +3,8 @@ require 'pry'
 require 'google_drive'
 require 'g-drive/authenticate'
 require 'g-drive/session'
-# require 'g-drive/sheet'
+require 'g-drive/sheet'
+require 'g-drive/worksheet'
 
 
 require 'slack-ruby-bot'

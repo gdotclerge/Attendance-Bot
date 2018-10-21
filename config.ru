@@ -4,7 +4,7 @@ require 'dotenv'
 Dotenv.load
 
 require 'slack-timelybot'
-require 'web'
+# require 'web'
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']
@@ -22,4 +22,4 @@ Thread.new do
   end
 end
 
-run SlackTimelyBot::Web
+# run SlackTimelyBot::Web
