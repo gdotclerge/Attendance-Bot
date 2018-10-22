@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :mod
+  belongs_to :cohorts
   belongs_to :sheet
-  
+
 end

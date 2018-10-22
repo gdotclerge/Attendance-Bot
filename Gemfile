@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem 'launchy'
 gem 'google_drive'
 gem 'slack-ruby-bot'
 gem 'celluloid-io'

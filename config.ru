@@ -7,7 +7,7 @@ require 'slack-timelybot'
 require 'web'
 require 'require_all'
 require_all 'lib'
-require_all 'models'
+
 
 Slack.configure do |config|
   config.token = ENV['SLACK_API_TOKEN']

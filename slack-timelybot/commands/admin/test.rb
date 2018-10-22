@@ -5,7 +5,10 @@ module SlackTimelyBot
         include SlackTimelyBot::Commands::Mixins::Subscribe
 
         subscribe_command 'admin test' do |client, data, _match|
-          client.say(text: "Admin tests running", channel: data.channel)
+
+
+
+          client.say(text: "You're in #{client.channel_name(data)}", channel: data.channel)
         end
 
       end

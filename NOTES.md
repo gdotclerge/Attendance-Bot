@@ -1,16 +1,24 @@
+Question for Mike:
+  - Logging?
+  - Puma? Nginx?
+  - Tools for checking Memory
+  - How do you deal with instances created in another module but that you want to extend with methods from a class that inherits that other module? (See gdrive session or client methods)
+
+
 Save Mem Ideas:
   use ||= for session in commands?
   use symbols for variables in commands?
   https://www.sitepoint.com/ruby-uses-memory/
   https://matt.aimonetti.net/posts/2010/07/29/object-allocation-why-you-should-care/
 
-
-
 why are we doing _match as one of the command arguments?
 
 Do we need check attendance and attendance commands?
 
 need to implement error handling module
+
+What is build
+
 
 client.store
   => #<Slack::RealTime::Store:0x007ff0bf1195d8

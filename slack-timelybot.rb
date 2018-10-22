@@ -1,6 +1,9 @@
 require 'pry'
-
 require 'sinatra/activerecord'
+require 'models/cohort'
+require 'models/sheet'
+require 'models/user'
+require 'launchy'
 
 require 'google_drive'
 require 'g-drive/authenticate'

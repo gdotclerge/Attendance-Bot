@@ -14,7 +14,7 @@ module SlackTimelyBot
           _Setup your class_
           `@timelybot help`: to see help resources and how to contact the TimelyBot Team
           `@timelybot admin set mod <Mod Number (integer)>`: to set the mod number for all the members of a particular channel. Only works in official student channels.
-          `@timelybot admin init <URL to Google Attendance Sheet>`: to initialize a cohort and assign their Google Attendance Spreadsheet for all students in that cohort. Only works in official student channels.
+          `@timelybot admin init <URL to Google Attendance Sheet>`: to initialize a cohort and assign their Google Attendance Spreadsheet for all students in that cohort. Should only be used in Mod 1! Only works in official student channels.
           `@timelybot admin update`: applies the spreadsheet ID of admin user to all students in that cohort. Must be called by TCF.
 
           _Everyday tasks_
