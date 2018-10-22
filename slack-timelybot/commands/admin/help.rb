@@ -8,7 +8,7 @@ module SlackTimelyBot
 
           text = <<-HEREDOC
           *Channel Commands*
-          `/invite @heytaco`: to invite me to channels
+          `/invite @timelybot`: to invite me to channels
 
           *Direct Message Commands*
           _Setup your class_

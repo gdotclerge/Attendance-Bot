@@ -6,11 +6,11 @@ module SlackTimelyBot
 
         subscribe_command 'present', 'here', 'signin' do |client, data, _match|
           if client.is_student?(data, _match)
-            client.say(text: "It looks like you're an admin, not a student. Only students can sign in.", channel: data.channel)
+            client.say(text: "It looks like you're an admin, not a student. Only students can sign in. Type `admin help` to see what kinds of commands you can run.", channel: data.channel)
           else
-            session = GDrive::Session.start
+            session = GDrive::Session.session
             sheet = session.get_sheet(client.user(data))
-            worksheet = sheet.mod_worksheet(mod)
+            worksheet = sheet.mod_worksheet(client.user(data).mod.number)
             time = client.current_time(data)
             real_name = client.real_name(data)
 
@@ -19,7 +19,7 @@ module SlackTimelyBot
             if(checked_time)
               client.say(text: "Awesome, you signed in at #{checked_time}", channel: data.channel)
             else
-              client.say(text: "We couldn't sign you in", channel: data.channel)
+              client.say(text: "We couldn't sign you in. Please DM a TCF to resolve.", channel: data.channel)
               # Should also contact admin for this class with info about why they couldn't sign in
             end
           end

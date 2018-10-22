@@ -49,11 +49,13 @@ module GDrive
       index = self.find_x
       students = self.rows[9..-3]
 
-      test = students.map do |student|
+      students.map do |student|
         if (student[index].length < 1)
           student[0]
         end
-      end
+      end.flatten
+      # What's the goal of the map? Using flatten bc I anticapte nil values but will have to check with Garry
+
     end
 
     def read_cells

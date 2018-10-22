@@ -9,7 +9,7 @@ module SlackTimelyBot
           update_success = []
           mod = _match["expression"].to_i
 
-          binding.pry
+          # Check to make sure they've initialized the cohort first
 
           client.slack_members(data).each do |slack_id|
             user = User.find_by(slack_id: slack_id)

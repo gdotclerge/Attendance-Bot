@@ -2,11 +2,13 @@ Save Mem Ideas:
   use ||= for session in commands?
   use symbols for variables in commands?
   https://www.sitepoint.com/ruby-uses-memory/
-
+  https://matt.aimonetti.net/posts/2010/07/29/object-allocation-why-you-should-care/
 
 
 
 why are we doing _match as one of the command arguments?
+
+Do we need check attendance and attendance commands?
 
 need to implement error handling module
 
