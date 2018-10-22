@@ -10,6 +10,7 @@ gem 'dokku-cli'
 gem 'dotenv'
 gem 'pry'
 gem 'pg'
+gem 'whenever'
 
 group :test, :development do
   gem 'rspec'

@@ -33,31 +33,25 @@ class AdminCommands < AttendanceBot
   end
 
 
-command 'admin check attendance' do |c, data, match|
-  c.extend(ClientMethods)
-
-  attendance = GoogleSheet.check_attendance(c.user(data))
-
-  client.say(text: "#{attendance}", channel: data.channel)
-end
-
-
-command 'admin attendance' do |client, data, match|
-  client.extend(ClientMethods)
-  students = GoogleSheet.attendance(client.user(data)).select { |student| student != nil }
-  @slack_client ||= ::Slack::Web::Client.new
-  student_id = client.store.users.values.select do |user|
-    user.real_name ? user.real_name == students[0] : false
-  end[0].id
-  im_channel = @slack_client.im_open(user: data.user)['channel']['id']
-  student_channel = @slack_client.im_open(user: student_id)['channel']['id']
-  if students.length > 0
-    client.say(text: "#{students.join(", ")} did not check in, I've sent them a DM reminder", channel: im_channel)
-    client.say(text: "Whoa, instructors are checking attendance, make sure you check in!", channel: student_channel)
-  else
-    client.say(text: "Nice! Everyone checked in!", channel: im_channel)
+  command 'admin attendance' do |client, data, match|
+    client.extend(ClientMethods)
+    attendance = GoogleSheet.attendance(client.user(data))
+    if attendance["missing"].length > 0
+      @slack_client ||= ::Slack::Web::Client.new
+      attendance["missing"].each do |student|
+        su = client.find_slack_user(student)
+        if su
+          im_channel = @slack_client.im_open(user: su.id)['channel']['id']
+          client.say(text: "Hi :wave:\n Your instructors are checking attendance now and you haven't checked in yet!", channel: im_channel)
+        else
+          client.say(text: "Oh no, I can't seem to find #{student}, please check to see if their slack name is the same as their name on the attendance sheet.", channel: data.channel)
+        end
+      end
+      client.say(text: "#{attendance["missing"].join(", ")} did not check in, I've sent a direct message as a reminder.", channel: data.channel)
+    end
+    header = "*Student*   |  Time\n--------------------"
+    client.say(text: " #{header}\n #{attendance["all_students"].join("\n")}", channel: data.channel)
   end
-end
 
 
 end

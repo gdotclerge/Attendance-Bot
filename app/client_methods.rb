@@ -29,6 +29,10 @@ module ClientMethods
     Time.now.getlocal(self.slack_user(data).tz_offset).strftime("%I:%M %p")
   end
 
+  def find_slack_user(student)
+    self.store.users.values.find { |user| user.real_name ? user.real_name.downcase === student.downcase : false }
+  end
+
 
 # ===========================
 # For methods don't don't use the client they're called on, should we put those in a different file not related to clients?
