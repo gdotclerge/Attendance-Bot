@@ -17,8 +17,8 @@ module SlackTimelyBot
 
           sheet_key = _match.spreadsheet_key
 
-          sheet = Sheet.create(sheet_key: sheet_key)
-          cohort = Cohort.create(name: client.channel_name(data), mod: 1)
+          sheet = Sheet.find_or_create_by(sheet_key: sheet_key)
+          cohort = Cohort.find_or_create_by(name: client.channel_name(data), mod: 1)
 
           client.slack_members(data).each do |slack_id|
             # Should only update non-admin users
