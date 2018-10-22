@@ -7,3 +7,4 @@ Slack.configure do |config|
 end
 
 ImHereBot.run
+# write a begin rescue here
