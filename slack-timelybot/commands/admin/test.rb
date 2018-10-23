@@ -8,7 +8,7 @@ module SlackTimelyBot
 
 
 
-          client.say(text: "You're in #{client.channel_name(data)}", channel: data.channel)
+          client.say(text: "Deployed and working.", channel: data.channel)
         end
 
       end
