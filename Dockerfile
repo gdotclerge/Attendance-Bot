@@ -4,7 +4,7 @@ WORKDIR /usr/src/Attendance-Bot
 
 COPY ./ ./
 
-RUN bundle install -without development test
+RUN bundle install --without development test
 
 EXPOSE 5000
 
