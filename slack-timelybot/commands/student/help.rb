@@ -34,7 +34,7 @@ Attendance Bot for Flatiron School
 
 
 
-For getting description of the command use: *help <command>*
+For a long description of the command use: *help <command>*
 
 
 *Contact*

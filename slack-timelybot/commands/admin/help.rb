@@ -29,7 +29,7 @@ Attendance Bot for Flatiron School
 *Commands:*
 #{other_commands_descs.join("\n")}
 
-For getting description of the command use: *admin help <command>*
+For a long description of the command use: *help <command>*
 
 *Contact*
 DM <@U81HZTAUR> or <@U873E9HJB> if you're having any trouble!

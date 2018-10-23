@@ -13,6 +13,10 @@ module SlackTimelyBot
         subscribe_command 'admin init' do |client, data, _match|
           session = GDrive::Session.session
 
+          # Check to see if channel is actually student channel
+
+          # Check to see if cohort num in channel matches cohort num in spreadsheet
+
           # need to check if spreadsheet exists example Spreadsheet.exists?(sheet_key)
           # sheet_key = session.valid_sheet_url?(match)
           # if sheet_key

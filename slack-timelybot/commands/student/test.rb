@@ -7,7 +7,6 @@ module SlackTimelyBot
         subscribe_command 'test' do |client, data, _match|
 
           client.say(text: "Student tests running", channel: data.channel)
-
         end
 
       end

@@ -6,8 +6,8 @@ module SlackTimelyBot
 
         help do
           title "present"
-          desc "checks you in for the day"
-          long_desc "Checks you in and responds with the time you checked in. Example - Awesome, you signed in at 9:00AM."
+          desc "Checks you in for the day."
+          long_desc "Checks you in for the day and responds with the time you checked in. Ex. `present`"
         end
 
         subscribe_command 'present', 'here', 'signin' do |client, data, _match|
