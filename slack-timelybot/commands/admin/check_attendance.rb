@@ -7,7 +7,7 @@ module SlackTimelyBot
         subscribe_command 'admin check attendance', 'admin attendance' do |client, data, _match|
         session = GDrive::Session.session
         sheet = session.get_sheet(client.user(data))
-        worksheet = sheet.mod_worksheet(client.user(data).mod.number)
+        worksheet = sheet.mod_worksheet(client.user(data).cohort.mod)
 
         client.say(text: "Checking attendance for Google sheet: _#{worksheet.title}_", channel: data.channel)
 
@@ -22,8 +22,7 @@ module SlackTimelyBot
 
             if slack_user
               im_channel = @slack_client.im_open(user: slack_user.id)['channel']['id']
-              client.say(text: "Hi :wave:\n Your instructors are checking attendance now and you haven’t checked in yet!", channel: data.channel)
-              # channel needs to be changed back to im_channel when we deploy
+              client.say(text: "Hi :wave:\n Your instructors are checking attendance now and you haven’t checked in yet!", channel: im_channel)
             else
               client.say(text: "Oh no, I can’t seem to find #{student}, please check to see if their slack name is the same as their name on the attendance sheet.", channel: data.channel)
             end
