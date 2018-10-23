@@ -1,8 +1,0 @@
-version: '3.6'
-
-services:
-  Attendance-Bot:
-    container_name: attendance-slackbot
-    build: ./
-    command: ruby bin/run.rb
-    working_dir: /usr/src/Attendance-Bot

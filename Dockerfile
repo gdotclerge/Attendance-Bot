@@ -6,4 +6,4 @@ COPY ./ ./
 
 RUN bundle install
 
-CMD ruby bin/run.rb
+CMD bundle exec puma -p $PORT

@@ -1,0 +1,5 @@
+require 'slack-timelybot/commands/student/test'
+require 'slack-timelybot/commands/student/present'
+require 'slack-timelybot/commands/student/standing'
+require 'slack-timelybot/commands/student/help'
+require 'slack-timelybot/commands/student/founder'

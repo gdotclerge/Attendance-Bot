@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem 'launchy'
 gem 'google_drive'
 gem 'slack-ruby-bot'
 gem 'celluloid-io'
@@ -10,11 +11,20 @@ gem 'dokku-cli'
 gem 'dotenv'
 gem 'pry'
 gem 'pg'
+gem 'newrelic-slack-ruby-bot'
+gem 'puma'
+gem 'sinatra'
 
-group :test, :development do
-  gem 'rspec'
+group :development, :test do
+  gem 'rake'
+  gem 'foreman'
 end
 
-
-
-# gem 'activerecord'
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'faker'
+  gem 'fabrication'
+end

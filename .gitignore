@@ -1,5 +1,9 @@
 config.json
 *.env
+.bundle
 
-# Ignore application configuration
 /config/application.yml
+
+Procfile
+
+NOTES.md
