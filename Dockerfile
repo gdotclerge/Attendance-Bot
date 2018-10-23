@@ -4,6 +4,8 @@ WORKDIR /usr/src/Attendance-Bot
 
 COPY ./ ./
 
-RUN bundle install
+RUN bundle install -without development test
 
-CMD bundle exec puma -p $PORT
+EXPOSE 5000
+
+CMD ["bundle", "exec", "puma", "-p", "5000"]
