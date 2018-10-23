@@ -4,6 +4,12 @@ module SlackTimelyBot
       class Present < SlackRubyBot::Commands::Base
         include SlackTimelyBot::Commands::Mixins::Subscribe
 
+        help do
+          title "present"
+          desc "checks you in for the day"
+          long_desc "Checks you in and responds with the time you checked in. Example - Awesome, you signed in at 9:00AM."
+        end
+
         subscribe_command 'present', 'here', 'signin' do |client, data, _match|
           if client.is_student?(data, _match)
             client.say(text: "It looks like you're an admin, not a student. Only students can sign in. Type `admin help` to see what kinds of commands you can run.", channel: data.channel)

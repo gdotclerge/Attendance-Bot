@@ -4,6 +4,13 @@ module SlackTimelyBot
       class Update < SlackRubyBot::Commands::Base
         include SlackTimelyBot::Commands::Mixins::Subscribe
         # admin update @michael #nyc-mhtn-web-080618
+
+        help do
+          title "admin update"
+          desc "update given students to given cohort"
+          long_desc "This command accepts multiple arguments (@students and #cohort). You can pass in multiple students. This command should be used when a student is repeating and joining a new mod. The attendance needs to be updated as well. example - admin update @garry @jon #nyc-mhtn-web-080618"
+        end
+
         subscribe_command 'admin update' do |client, data, _match|
 
           args = _match['expression'].gsub('<', "").gsub('>', "").split(" ")

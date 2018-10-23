@@ -4,6 +4,12 @@ module SlackTimelyBot
       class Init < SlackRubyBot::Commands::Base
         include SlackTimelyBot::Commands::Mixins::Subscribe
 
+        help do
+          title "admin init"
+          desc "initializes students for use with Timely (only for use in Mod 1)"
+          long_desc "*This command should only be used in Mod 1.* \nThis command requires an argument of the url for the cohort's attendance sheet. This command will create the association between the cohort and attendance sheet. `example - admin init attendance sheet url`. "
+        end
+
         subscribe_command 'admin init' do |client, data, _match|
           session = GDrive::Session.session
 

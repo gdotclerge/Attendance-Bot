@@ -4,7 +4,13 @@ module SlackTimelyBot
       class CheckAttendance < SlackRubyBot::Commands::Base
         include SlackTimelyBot::Commands::Mixins::Subscribe
 
-        subscribe_command 'admin check attendance', 'admin attendance' do |client, data, _match|
+        help do
+          title "admin attendance"
+          desc "checks that all students have checked in"
+          long_desc "Checks the attendance sheet for any missing students and send a slack message reminding them to check in. Also returns all the students and their check in times"
+        end
+
+        subscribe_command 'admin attendance', 'admin attendance' do |client, data, _match|
         session = GDrive::Session.session
         sheet = session.get_sheet(client.user(data))
         worksheet = sheet.mod_worksheet(client.user(data).cohort.mod)
