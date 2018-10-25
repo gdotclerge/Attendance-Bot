@@ -16,7 +16,7 @@ module SlackTimelyBot
           else
             session = GDrive::Session.session
             sheet = session.get_sheet(client.user(data))
-            worksheet = sheet.mod_worksheet(client.user(data).mod.number)
+            worksheet = sheet.mod_worksheet(client.user(data).cohort.mod)
             time = client.current_time(data)
             real_name = client.real_name(data)
 
