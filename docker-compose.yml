@@ -1,0 +1,27 @@
+version: '3.6'
+
+services:
+  attendance-bot:
+    container_name: slackbot
+    build:
+      context: .
+      dockerfile: Dockerfile-alternate
+    command: ["bundle", "exec", "puma", "-p", "5000"]
+    working_dir: /usr/src/Attendance-Bot
+    environment:
+      POSTGRES_URI: postgres://jmines@localhost:5432/im_here_bot
+    links:
+      - postgres
+    ports:
+      - "3000:5000"
+    volumes:
+      - ./:/usr/src/Attendance-Bot
+  postgres:
+    environment:
+      POSTGRES_USER: jmines
+      POSTGRES_PASSWORD:
+      POSTGRES_DB: im_here_bot
+      POSTGRES_HOST: postgres
+    image: postgres
+    ports:
+      - "5432:5432"

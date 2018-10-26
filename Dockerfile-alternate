@@ -1,0 +1,11 @@
+FROM ruby:2.3.7
+
+WORKDIR /usr/src/Attendance-Bot
+
+COPY ./ ./
+
+RUN bundle install
+
+EXPOSE 5000
+
+CMD ["/bin/bash"]

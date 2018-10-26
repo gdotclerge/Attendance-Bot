@@ -1,9 +1,5 @@
 development:
- adapter: postgresql
- encoding: unicode
- database: im_here_bot
- username: jmines
- password:
+  url: postgres://jmines@localhost:5432/im_here_bot
 
 production:
  adapter: postgresql

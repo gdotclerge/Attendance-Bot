@@ -6,6 +6,6 @@ COPY ./ ./
 
 RUN bundle install --without development test
 
-EXPOSE 5000
+EXPOSE 3000
 
 CMD ["bundle", "exec", "puma", "-p", "5000"]

@@ -5,6 +5,14 @@ Question for Mike:
   - How do you deal with instances created in another module but that you want to extend with methods from a class that inherits that other module? (See gdrive session or client methods)
 
 
+  development:
+   adapter: postgresql
+   encoding: unicode
+   database: im_here_bot
+   username: jmines
+   password:
+
+
 Save Mem Ideas:
   use ||= for session in commands?
   use symbols for variables in commands?
