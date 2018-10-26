@@ -6,7 +6,7 @@ module SlackTimelyBot
 
         help do
           title "admin attendance"
-          desc "checks that all students have checked in"
+          desc "checks that all students have checked in ex. `admin attendance`"
           long_desc "Checks the attendance sheet for any missing students and send a slack message reminding them to check in. Also returns all the students and their check in times"
         end
 

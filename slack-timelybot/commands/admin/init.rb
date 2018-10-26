@@ -6,7 +6,7 @@ module SlackTimelyBot
 
         help do
           title "admin init"
-          desc "initializes students for use with Timely (only for use in Mod 1)"
+          desc "initializes students for use with Timely (only used in Mod 1) ex. `admin init https://googlesheet.com`"
           long_desc "*This command should only be used in Mod 1.* \nThis command requires an argument of the url for the cohort's attendance sheet. This command will create the association between the cohort and attendance sheet. `example - admin init attendance sheet url`. "
         end
 

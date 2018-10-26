@@ -7,7 +7,7 @@ module SlackTimelyBot
 
         help do
           title "admin update"
-          desc "update given students to given cohort"
+          desc "update given students to given cohort ex `admin update @garry @jon #nyc-mhtn-web-080618`"
           long_desc "This command accepts multiple arguments (@students and #cohort). You can pass in multiple students. This command should be used when a student is repeating and joining a new mod. The attendance needs to be updated as well. example - admin update @garry @jon #nyc-mhtn-web-080618"
         end
 
